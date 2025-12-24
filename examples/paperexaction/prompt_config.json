@@ -1,0 +1,7 @@
+{
+  "prompt_template": "Extract material property triples as JSON array. Each item must be {\"material\":...,\"property\":...,\"value\":...}. Text: {{content}}",
+  "model_params": {
+    "model": "deepseek-r1:671b-64k",
+    "temperature": 0.2
+  }
+}
