@@ -15,6 +15,7 @@ from pathlib import Path
 
 from openai import OpenAI
 from extractor import extract_from_markdown_files
+from tqdm import tqdm
 
 
 def call_llm(
@@ -85,7 +86,7 @@ def _try_parse_json(text: str):
 
 def extract_with_llm(paths: List[str], prompt_cfg: Dict, api_url: str | None, api_key: str | None) -> List[Dict]:
     results: List[Dict] = []
-    for p in paths:
+    for p in tqdm(paths, desc="Files"):
         pth = Path(p)
         text = pth.read_text(encoding="utf-8")
         prompt_template = prompt_cfg.get("prompt_template", "")

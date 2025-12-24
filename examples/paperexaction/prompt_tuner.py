@@ -15,7 +15,7 @@ from typing import Dict, List, Any
 
 from extractor import extract_from_markdown_files
 from llm_client import call_llm
-
+from tqdm import tqdm
 
 def _load_dev(dev_path: str) -> List[Dict]:
     lines = Path(dev_path).read_text(encoding="utf-8").splitlines()
@@ -51,7 +51,11 @@ def train_prompt(dev_path: str, api_url: str | None, api_key: str | None, candid
         ]
     best = None
     best_score = -1.0
-    for i in range(trials):
+    import time
+    call_count = 0
+    print(f"train_prompt: start trials={trials} api_url={'SET' if api_url else 'NONE'} dev_items={len(dev)}")
+    t0 = time.time()
+    for i in tqdm(range(trials), desc="训练次数"):
         # sample a prompt and model params
         prompt_template = random.choice(candidates)
         model_params = {"model": "deepseek-r1:671b-64k", "temperature": random.choice([0.0, 0.2, 0.5])}
@@ -64,6 +68,7 @@ def train_prompt(dev_path: str, api_url: str | None, api_key: str | None, candid
                 prompt = prompt_template.replace("{{content}}", Path(f).read_text(encoding="utf-8"))
                 try:
                     resp = call_llm(prompt, api_url, api_key, model_params)
+                    call_count += 1
                     # try to parse JSON
                     parsed = None
                     try:
@@ -82,7 +87,9 @@ def train_prompt(dev_path: str, api_url: str | None, api_key: str | None, candid
         if avg > best_score:
             best_score = avg
             best = {"prompt_template": prompt_template, "model_params": model_params, "score": avg}
+    t1 = time.time()
     out = best or {"prompt_template": candidates[0], "model_params": {"model": "deepseek-r1:671b-64k", "temperature": 0.0}, "score": 0.0}
+    print(f"train_prompt: finished best_score={out.get('score')} trials_run={trials} call_count={call_count} elapsed={t1-t0:.2f}s")
     # persist best config for later reuse
     try:
         Path("prompt_config.json").write_text(json.dumps({"prompt_template": out["prompt_template"], "model_params": out.get("model_params", {})}, ensure_ascii=False, indent=2), encoding="utf-8")
