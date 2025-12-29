@@ -53,8 +53,21 @@ def train_prompt(dev_path: str, api_url: str | None, api_key: str | None, candid
     best_score = -1.0
     import time
     call_count = 0
+    run_meta = {
+        "trials": trials,
+        "api_url_present": bool(api_url),
+        "dev_items": len(dev),
+        "start_time": time.time(),
+    }
     print(f"train_prompt: start trials={trials} api_url={'SET' if api_url else 'NONE'} dev_items={len(dev)}")
     t0 = time.time()
+    # open per-trial log (append) and write run metadata
+    trials_log = Path("prompt_tuner_trials.jsonl")
+    run_log = Path("prompt_tuner_run.json")
+    try:
+        trials_log.write_text("", encoding="utf-8")
+    except Exception:
+        pass
     for i in tqdm(range(trials), desc="训练次数"):
         # sample a prompt and model params
         prompt_template = random.choice(candidates)
@@ -84,11 +97,28 @@ def train_prompt(dev_path: str, api_url: str | None, api_key: str | None, candid
             s = _score(parsed, gold)
             total_score += s
         avg = total_score / max(1, len(dev))
+        # write per-trial record
+        try:
+            rec = {
+                "trial": i,
+                "prompt_template": prompt_template,
+                "model_params": model_params,
+                "avg_score": avg,
+            }
+            with trials_log.open("a", encoding="utf-8") as fh:
+                fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
+        except Exception:
+            pass
         if avg > best_score:
             best_score = avg
             best = {"prompt_template": prompt_template, "model_params": model_params, "score": avg}
     t1 = time.time()
     out = best or {"prompt_template": candidates[0], "model_params": {"model": "deepseek-r1:671b-64k", "temperature": 0.0}, "score": 0.0}
+    run_meta.update({"end_time": t1, "elapsed_s": t1 - t0, "best_score": out.get("score"), "call_count": call_count})
+    try:
+        run_log.write_text(json.dumps(run_meta, ensure_ascii=False, indent=2), encoding="utf-8")
+    except Exception:
+        pass
     print(f"train_prompt: finished best_score={out.get('score')} trials_run={trials} call_count={call_count} elapsed={t1-t0:.2f}s")
     # persist best config for later reuse
     try:

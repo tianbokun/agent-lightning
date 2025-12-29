@@ -51,7 +51,16 @@ def main(argv: List[str] | None = None) -> None:
         if args.train_prompt:
             if not args.dev_labeled:
                 raise SystemExit("--dev-labeled is required when --train-prompt is set")
-            best = train_prompt(args.dev_labeled, args.api_url, args.api_key)
+            # pass api_url/api_key from CLI or environment into trainer
+            import os
+            tp_api_url = args.api_url or os.environ.get("PAPER_LLM_API_URL")
+            tp_api_key = args.api_key or os.environ.get("PAPER_LLM_API_KEY")
+            # If user requested LLM-based tuning but no API info is available, fail fast with instructions.
+            if args.use_llm and not tp_api_url:
+                raise SystemExit(
+                    "LLM API URL not provided for --train-prompt; set PAPER_LLM_API_URL env var or pass --api-url <URL> --api-key <KEY>"
+                )
+            best = train_prompt(args.dev_labeled, tp_api_url, tp_api_key)
             prompt_cfg = {"prompt_template": best.get("prompt_template"), "model_params": best.get("model_params", {})}
             Path("prompt_config.json").write_text(json.dumps(prompt_cfg, ensure_ascii=False, indent=2), encoding="utf-8")
             print(f"Saved best prompt config (score={best.get('score')}) to prompt_config.json")
