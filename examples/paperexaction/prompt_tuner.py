@@ -12,7 +12,7 @@ import json
 import random
 from pathlib import Path
 from typing import Dict, List, Any
-
+from llm_client import call_llm
 from extractor import extract_from_markdown_files
 from llm_client import call_llm
 from tqdm import tqdm
@@ -41,7 +41,7 @@ def _score(preds: List[Dict], golds: List[Dict]) -> float:
     return 2 * p * r / (p + r)
 
 
-def train_prompt(dev_path: str, api_url: str | None, api_key: str | None, candidates: List[str] | None = None, trials: int = 200) -> Dict[str, Any]:
+def train_prompt(dev_path: str, api_url: str | None, api_key: str | None, candidates: List[str] | None = None, trials: int = 200, model: str = "deepseek-r1:671b-64k") -> Dict[str, Any]:
     dev = _load_dev(dev_path)
     if candidates is None:
         candidates = [
@@ -71,7 +71,7 @@ def train_prompt(dev_path: str, api_url: str | None, api_key: str | None, candid
     for i in tqdm(range(trials), desc="训练次数"):
         # sample a prompt and model params
         prompt_template = random.choice(candidates)
-        model_params = {"model": "deepseek-r1:671b-64k", "temperature": random.choice([0.0, 0.2, 0.5])}
+        model_params = {"model": model, "temperature": random.choice([0.0, 0.2, 0.5])}
         # evaluate on dev set
         total_score = 0.0
         for item in dev:
@@ -97,7 +97,7 @@ def train_prompt(dev_path: str, api_url: str | None, api_key: str | None, candid
             s = _score(parsed, gold)
             total_score += s
         avg = total_score / max(1, len(dev))
-        # write per-trial record
+        # write per-trial record with expanded prompt and llm responses
         try:
             rec = {
                 "trial": i,
@@ -105,6 +105,20 @@ def train_prompt(dev_path: str, api_url: str | None, api_key: str | None, candid
                 "model_params": model_params,
                 "avg_score": avg,
             }
+            # optionally record sample expanded prompts and LLM responses for debugging
+            for item in dev[:1]:  # record first item's expanded prompt and response for debugging
+                f = item["file"]
+                try:
+                    expanded_prompt = prompt_template.replace("{{content}}", Path(f).read_text(encoding="utf-8")).replace("{{filename}}", Path(f).name)
+                    rec["sample_expanded_prompt_len"] = len(expanded_prompt)
+                    if api_url:
+                        try:
+                            resp = call_llm(expanded_prompt, api_url, api_key, model_params)
+                            rec["sample_llm_response"] = resp[:200] if isinstance(resp, str) else str(resp)[:200]  # first 200 chars
+                        except Exception as e:
+                            rec["sample_llm_error"] = str(e)[:100]
+                except Exception as e:
+                    rec["sample_expand_error"] = str(e)[:100]
             with trials_log.open("a", encoding="utf-8") as fh:
                 fh.write(json.dumps(rec, ensure_ascii=False) + "\n")
         except Exception:
@@ -113,7 +127,7 @@ def train_prompt(dev_path: str, api_url: str | None, api_key: str | None, candid
             best_score = avg
             best = {"prompt_template": prompt_template, "model_params": model_params, "score": avg}
     t1 = time.time()
-    out = best or {"prompt_template": candidates[0], "model_params": {"model": "deepseek-r1:671b-64k", "temperature": 0.0}, "score": 0.0}
+    out = best or {"prompt_template": candidates[0], "model_params": {"model": model, "temperature": 0.0}, "score": 0.0}
     run_meta.update({"end_time": t1, "elapsed_s": t1 - t0, "best_score": out.get("score"), "call_count": call_count})
     try:
         run_log.write_text(json.dumps(run_meta, ensure_ascii=False, indent=2), encoding="utf-8")

@@ -31,6 +31,7 @@ def main(argv: List[str] | None = None) -> None:
     p.add_argument("--use-llm", action="store_true", help="Use LLM for extraction instead of rule-based extractor")
     p.add_argument("--api-url", default=None, help="LLM API URL (placeholder allowed)")
     p.add_argument("--api-key", default=None, help="LLM API key (placeholder allowed)")
+    p.add_argument("--model", default="deepseek-r1:671b-64k", help="LLM model name (default: deepseek-r1:671b-64k)")
     p.add_argument("--train-prompt", action="store_true", help="Run prompt tuning on a small dev set before extraction")
     p.add_argument("--dev-labeled", default=None, help="Path to dev labeled jsonl for prompt tuning (samples/labeled.jsonl)")
     args = p.parse_args(argv)
@@ -60,7 +61,7 @@ def main(argv: List[str] | None = None) -> None:
                 raise SystemExit(
                     "LLM API URL not provided for --train-prompt; set PAPER_LLM_API_URL env var or pass --api-url <URL> --api-key <KEY>"
                 )
-            best = train_prompt(args.dev_labeled, tp_api_url, tp_api_key)
+            best = train_prompt(args.dev_labeled, tp_api_url, tp_api_key, model=args.model)
             prompt_cfg = {"prompt_template": best.get("prompt_template"), "model_params": best.get("model_params", {})}
             Path("prompt_config.json").write_text(json.dumps(prompt_cfg, ensure_ascii=False, indent=2), encoding="utf-8")
             print(f"Saved best prompt config (score={best.get('score')}) to prompt_config.json")
@@ -74,7 +75,7 @@ def main(argv: List[str] | None = None) -> None:
         import os
         api_url = args.api_url or os.environ.get("PAPER_LLM_API_URL")
         api_key = args.api_key or os.environ.get("PAPER_LLM_API_KEY")
-        results = extract_with_llm(expanded_files, prompt_cfg, api_url, api_key)
+        results = extract_with_llm(expanded_files, prompt_cfg, api_url, api_key, model=args.model)
     else:
         results = extract_from_markdown_files(expanded_files, template)
 
