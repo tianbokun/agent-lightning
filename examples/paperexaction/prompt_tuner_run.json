@@ -1,10 +1,10 @@
 {
   "trials": 200,
-  "api_url_present": false,
+  "api_url_present": true,
   "dev_items": 8,
-  "start_time": 1766972263.8954713,
-  "end_time": 1766972265.271142,
-  "elapsed_s": 1.3751013278961182,
-  "best_score": 0.10000000000000002,
-  "call_count": 0
+  "start_time": 1766988092.3124747,
+  "end_time": 1767029628.4831574,
+  "elapsed_s": 41536.170677900314,
+  "best_score": 0.0,
+  "call_count": 1600
 }

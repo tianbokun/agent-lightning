@@ -1,0 +1,54 @@
+file,material,property,value,context
+samples/sample1.md,AA2024,density,2.78 g/cm,Aluminum alloy AA2024 shows a density of 2.78 g/cm3 and a melting point of 502 °C.
+samples/sample1.md,AA2024,melting point,502 °C,Aluminum alloy AA2024 shows a density of 2.78 g/cm3 and a melting point of 502 °C.
+samples/sample1.md,MS,electrical conductivity,35.7 MS/m,The electrical conductivity was measured as 35.7 MS/m.
+samples/sample1.md,SiO2,band gap,8.9 eV,Silicon dioxide (SiO2) exhibits a band gap of 8.9 eV.
+samples/sample1.md,Graphene,electrical conductivity,1e,"In another test, Graphene presented an electrical conductivity: 1e6 S/m and thermal conductivity = 5000 W/mK."
+samples/sample1.md,Graphene,electrical conductivity,1e,"In another test, Graphene presented an electrical conductivity: 1e6 S/m and thermal conductivity = 5000 W/mK."
+samples/sample1.md,Graphene,thermal conductivity,500,"In another test, Graphene presented an electrical conductivity: 1e6 S/m and thermal conductivity = 5000 W/mK."
+samples/sample1.md,Graphene,thermal conductivity,500,"In another test, Graphene presented an electrical conductivity: 1e6 S/m and thermal conductivity = 5000 W/mK."
+samples/sample2.md,GPa,hardness,7.2 GPa,The novel composite material CarbonFiberLaminate has a hardness of 7.2 GPa and Young's modulus around 120 GPa.
+samples/sample2.md,GPa,young's modulus,120 GPa,The novel composite material CarbonFiberLaminate has a hardness of 7.2 GPa and Young's modulus around 120 GPa.
+samples/sample2.md,Mg,density,1.74 g/cm,"For magnesium (Mg), density: 1.74 g/cm3; melting point = 650 °C."
+samples/sample2.md,Mg,density,1.74 g/cm,"For magnesium (Mg), density: 1.74 g/cm3; melting point = 650 °C."
+samples/sample2.md,Mg,melting point,650 °C,"For magnesium (Mg), density: 1.74 g/cm3; melting point = 650 °C."
+samples/sample2.md,Mg,melting point,650 °C,"For magnesium (Mg), density: 1.74 g/cm3; melting point = 650 °C."
+samples/sample2.md,Copper,thermal conductivity,401 W/mK,The report lists thermal conductivity for Copper as 401 W/mK.
+samples/sample3.md,MoS2,thermal conductivity,85 W/mK,Molybdenum disulfide (MoS2) shows a band gap of 1.2 eV and a thermal conductivity of 85 W/mK.
+samples/sample3.md,MoS2,band gap,1.2 eV,Molybdenum disulfide (MoS2) shows a band gap of 1.2 eV and a thermal conductivity of 85 W/mK.
+samples/sample3.md,GPa,hardness,3.5 GPa,The measured hardness was 3.5 GPa.
+samples/sample3.md,MS,melting point,145,"Additionally, a tested alloy SteelX had an electrical conductivity about 10 MS/m and melting point = 1450 °C."
+samples/sample3.md,MS,melting point,145,"Additionally, a tested alloy SteelX had an electrical conductivity about 10 MS/m and melting point = 1450 °C."
+samples/sample3.md,MS,electrical conductivity,10 MS/m,"Additionally, a tested alloy SteelX had an electrical conductivity about 10 MS/m and melting point = 1450 °C."
+samples/sample4.md,MS,electrical conductivity,0.5 MS/m,Bismuth Telluride (Bi2Te3) exhibits a thermal conductivity of 1.6 W/mK and an electrical conductivity of 0.5 MS/m.
+samples/sample4.md,MS,thermal conductivity,1.6 W/mK,Bismuth Telluride (Bi2Te3) exhibits a thermal conductivity of 1.6 W/mK and an electrical conductivity of 0.5 MS/m.
+samples/sample4.md,Its,density,7.7 g/cm,Its density is approximately 7.7 g/cm3.
+samples/sample4.md,GPa,hardness,8.1 GPa,The new ceramic ZrCer has a Young's modulus = 200 GPa and hardness around 8.1 GPa.
+samples/sample4.md,GPa,young's modulus,200 GPa,The new ceramic ZrCer has a Young's modulus = 200 GPa and hardness around 8.1 GPa.
+samples/sample4.md,GPa,young's modulus,200 GPa,The new ceramic ZrCer has a Young's modulus = 200 GPa and hardness around 8.1 GPa.
+samples/sample5.md,AlloyPrime,density,4.32 g/cm,A newly developed alloy AlloyPrime shows a density of 4.32 g/cm3 and an electrical conductivity of 12 MS/m.
+samples/sample5.md,MS,electrical conductivity,12 MS/m,A newly developed alloy AlloyPrime shows a density of 4.32 g/cm3 and an electrical conductivity of 12 MS/m.
+samples/sample5.md,GPa,hardness,6.0 GPa,Its reported hardness is 6.0 GPa.
+samples/sample5.md,GlassY,thermal conductivity,0.8 W/mK,"In tests, GlassY had a thermal conductivity: 0.8 W/mK and band gap = 9.1 eV."
+samples/sample5.md,GlassY,thermal conductivity,0.8 W/mK,"In tests, GlassY had a thermal conductivity: 0.8 W/mK and band gap = 9.1 eV."
+samples/sample5.md,GlassY,band gap,9.1 eV,"In tests, GlassY had a thermal conductivity: 0.8 W/mK and band gap = 9.1 eV."
+samples/sample5.md,GlassY,band gap,9.1 eV,"In tests, GlassY had a thermal conductivity: 0.8 W/mK and band gap = 9.1 eV."
+samples/sample6.md,GPa,melting point,166,Titanium alloy TiX exhibits a Young's modulus of 115 GPa and a melting point of 1668 °C.
+samples/sample6.md,GPa,young's modulus,115 GPa,Titanium alloy TiX exhibits a Young's modulus of 115 GPa and a melting point of 1668 °C.
+samples/sample6.md,Measured,density,4.51 g/cm,Measured density was 4.51 g/cm3.
+samples/sample6.md,CNT-1,electrical conductivity,2e,Carbon nanotube CNT-1 showed an electrical conductivity of 2e5 S/m and thermal conductivity around 3000 W/mK.
+samples/sample6.md,CNT-1,thermal conductivity,300,Carbon nanotube CNT-1 showed an electrical conductivity of 2e5 S/m and thermal conductivity around 3000 W/mK.
+samples/sample7.md,MgO,band gap,7.8 eV,Magnesium oxide (MgO) has a band gap of 7.8 eV and a hardness measured as 5.2 GPa.
+samples/sample7.md,GPa,hardness,5.2 GPa,Magnesium oxide (MgO) has a band gap of 7.8 eV and a hardness measured as 5.2 GPa.
+samples/sample7.md,Reported,density,3.58 g/cm,Reported density: 3.58 g/cm3.
+samples/sample7.md,Reported,density,3.58 g/cm,Reported density: 3.58 g/cm3.
+samples/sample7.md,PolyX,electrical conductivity,1e-,The polymer PolyX has thermal conductivity = 0.25 W/mK and electrical conductivity approximately 1e-6 S/m.
+samples/sample7.md,PolyX,thermal conductivity,0.25 W/mK,The polymer PolyX has thermal conductivity = 0.25 W/mK and electrical conductivity approximately 1e-6 S/m.
+samples/sample7.md,PolyX,thermal conductivity,0.25 W/mK,The polymer PolyX has thermal conductivity = 0.25 W/mK and electrical conductivity approximately 1e-6 S/m.
+samples/sample8.md,GPa,hardness,9.5 GPa,Novel ceramic CerX demonstrates a hardness of 9.5 GPa and Young's modulus around 350 GPa.
+samples/sample8.md,GPa,young's modulus,350 GPa,Novel ceramic CerX demonstrates a hardness of 9.5 GPa and Young's modulus around 350 GPa.
+samples/sample8.md,Its,density,6.2 g/cm,Its density is near 6.2 g/cm3.
+samples/sample8.md,MS,melting point,961.8 °C,Silver (Ag) measured electrical conductivity: 63 MS/m and melting point = 961.8 °C.
+samples/sample8.md,MS,melting point,961.8 °C,Silver (Ag) measured electrical conductivity: 63 MS/m and melting point = 961.8 °C.
+samples/sample8.md,MS,electrical conductivity,63 MS/m,Silver (Ag) measured electrical conductivity: 63 MS/m and melting point = 961.8 °C.
+samples/sample8.md,MS,electrical conductivity,63 MS/m,Silver (Ag) measured electrical conductivity: 63 MS/m and melting point = 961.8 °C.

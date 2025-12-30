@@ -1,7 +1,7 @@
 {
   "prompt_template": "从下面的文档中提取材料-性质-数值三元组，输出为 JSON 数组，每个对象包含 material, property, value 字段:\n{{content}}",
   "model_params": {
-    "model": "deepseek-r1:671b-64k",
+    "model": "qwen3:32b",
     "temperature": 0.5
   }
 }
